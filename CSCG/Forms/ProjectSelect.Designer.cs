@@ -89,7 +89,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.pjList);
             this.Name = "ProjectSelect";
-            this.Text = "ProjectSelect";
+            this.Text = "Select a Project";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 

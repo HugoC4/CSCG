@@ -62,6 +62,7 @@
             this.btnNewProject.TabIndex = 7;
             this.btnNewProject.Text = "New Project";
             this.btnNewProject.UseVisualStyleBackColor = true;
+            this.btnNewProject.Click += new System.EventHandler(this.btnNewProject_Click);
             // 
             // btnOpenProject
             // 

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using CSCG.Controls;
 using CSCG.Properties;
+using CSCG.Models;
 
 namespace CSCG.Forms
 {
@@ -17,12 +18,11 @@ namespace CSCG.Forms
         public ProjectSelect()
         {
             InitializeComponent();
-            List<ProjectSummary> temp = new List<ProjectSummary>();
-            for (int i = 0; i < 24; i++)
-            {
-                temp.Add(new ProjectSummary(i, "Trololol", DateTime.Today, DateTime.Now) { Dock = DockStyle.Top });
-            }
-            pjList.AddProjects(temp);
+        }
+
+        public Project SelectedProject()
+        {
+            return pjList.SelectedProject?.Project;
         }
 
         private void btnOpen_Click(object sender, EventArgs e)

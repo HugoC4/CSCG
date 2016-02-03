@@ -69,6 +69,12 @@
     </Compile>
     <Compile Include="CSCGContext.cs" />
     <Compile Include="CSCGDbConfig.cs" />
+    <Compile Include="Forms\ProjectCreate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ProjectCreate.Designer.cs">
+      <DependentUpon>ProjectCreate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\StartMenu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -85,6 +91,10 @@
     <Compile Include="Migrations\201602031927396_Project.Designer.cs">
       <DependentUpon>201602031927396_Project.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201602031940398_ProjectNamespace.cs" />
+    <Compile Include="Migrations\201602031940398_ProjectNamespace.Designer.cs">
+      <DependentUpon>201602031940398_ProjectNamespace.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Program.cs" />
@@ -95,6 +105,9 @@
     <EmbeddedResource Include="Controls\ProjectSummary.resx">
       <DependentUpon>ProjectSummary.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ProjectCreate.resx">
+      <DependentUpon>ProjectCreate.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ProjectSelect.resx">
       <DependentUpon>ProjectSelect.cs</DependentUpon>
     </EmbeddedResource>
@@ -103,6 +116,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201602031927396_Project.resx">
       <DependentUpon>201602031927396_Project.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602031940398_ProjectNamespace.resx">
+      <DependentUpon>201602031940398_ProjectNamespace.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

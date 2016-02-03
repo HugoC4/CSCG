@@ -8,6 +8,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CSCG.Models;
 
 namespace CSCG.Controls
 {
@@ -20,15 +21,14 @@ namespace CSCG.Controls
         public ProjectList()
         {
             InitializeComponent();
-        }
-
-        public void AddProjects(List<ProjectSummary> summaries)
-        {
-            foreach (ProjectSummary pjs in summaries)
+            if (DesignMode) return;
+            foreach (Project project in Program.Db.Projects)
             {
-                pjs.RegisterClick(OnProjectClick);
-                pnlList.Controls.Add(pjs);
-                ProjectSummaries.Add(ProjectSummaries.Count, pjs);
+                var summary = new ProjectSummary(project) { Dock = DockStyle.Top };
+                summary.RegisterClick(OnProjectClick);
+                pnlList.Controls.Add(summary);
+                ProjectSummaries.Add(ProjectSummaries.Count, summary);
+
             }
         }
 

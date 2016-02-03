@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CSCG.Models;
 
 namespace CSCG.Forms
 {
@@ -23,11 +24,12 @@ namespace CSCG.Forms
             "User you = new User(motto: \"Go do something\");",
             "The fan!!! *shrugs*"
         };
-        private ProjectSelect ProjectSelect { get; set; }
 
         public StartMenu()
         {
             InitializeComponent();
+            if (!Program.Db.Projects.Any())
+                btnOpenProject.Enabled = false;
         }
 
         protected override void OnShown(EventArgs e)
@@ -46,7 +48,32 @@ namespace CSCG.Forms
             ProjectSelect projectSelect = new ProjectSelect();
             if (projectSelect.ShowDialog(this) != DialogResult.OK) return;
 
+            Project selectedProject = projectSelect.SelectedProject();
+            projectSelect.Dispose();
             // TODO: Load existing project!
+        }
+
+        private void btnNewProject_Click(object sender, EventArgs e)
+        {
+            ProjectCreate projectCreate = new ProjectCreate();
+            if (projectCreate.ShowDialog(this) != DialogResult.OK) return;
+
+            Project project = new Project()
+            {
+                Title = projectCreate.Title.Trim(),
+                Namespace = projectCreate.Namespace.Trim(),
+                Created = DateTime.Now,
+                Updated = DateTime.Now
+            };
+
+
+            Program.Db.Projects.Add(project);
+            Program.Db.SaveChangesAsync();
+
+            btnOpenProject.Enabled = true;
+            projectCreate.Dispose();
+
+            // TODO: Load new project
         }
     }
 }

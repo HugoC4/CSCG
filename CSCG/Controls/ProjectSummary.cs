@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CSCG.Models;
 using CSCG.Properties;
 
 namespace CSCG.Controls
@@ -15,8 +16,9 @@ namespace CSCG.Controls
     {
         public bool Selected = false;
         private Action<object, EventArgs> GlobalOnClick { get; set; }
+        public virtual Project Project { get; set; }
 
-        public ProjectSummary(int id, string title, DateTime created, DateTime updated)
+        public ProjectSummary(Project project)
         {
             InitializeComponent();
             
@@ -27,10 +29,10 @@ namespace CSCG.Controls
                 ctx.Click += OnClick;
             }
             
-            lblId.Text = id.ToString();
-            lblTitle.Text = title;
-            lblCreated.Text = Resources.ProjectSummary_Created + created.ToShortDateString();
-            lblUpdated.Text = Resources.ProjectSummary_Updated + updated.ToShortDateString();
+            lblId.Text = project.ProjectId.ToString();
+            lblTitle.Text = project.Title;
+            lblCreated.Text = Resources.ProjectSummary_Created + project.Created.ToShortDateString();
+            lblUpdated.Text = Resources.ProjectSummary_Updated + project.Updated.ToShortDateString();
             
         }
         

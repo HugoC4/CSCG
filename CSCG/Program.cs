@@ -9,7 +9,9 @@ namespace CSCG
 {
     static class Program
     {
-        public static StartMenu StartMenu;
+        public static StartMenu StartMenu { get; set; }
+
+        public static CSCGContext Db { get; private set; }
 
         /// <summary>
         /// The main entry point for the application.
@@ -19,6 +21,7 @@ namespace CSCG
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            Db = new CSCGContext();
             StartMenu = new StartMenu();
             Application.Run(StartMenu);
         }
