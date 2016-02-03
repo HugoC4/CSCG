@@ -33,7 +33,7 @@ namespace CSCG.Controls
             lblTitle.Text = project.Title;
             lblCreated.Text = Resources.ProjectSummary_Created + project.Created.ToShortDateString();
             lblUpdated.Text = Resources.ProjectSummary_Updated + project.Updated.ToShortDateString();
-            
+            Project = project;
         }
         
         private void Highlight(object sender, EventArgs e)

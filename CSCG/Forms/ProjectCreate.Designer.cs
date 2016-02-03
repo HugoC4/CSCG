@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProjectCreate));
             this.lblTitle = new System.Windows.Forms.Label();
             this.txtTitle = new System.Windows.Forms.TextBox();
             this.txtNamespace = new System.Windows.Forms.TextBox();
@@ -121,6 +122,7 @@
             this.Controls.Add(this.lblNamespace);
             this.Controls.Add(this.txtTitle);
             this.Controls.Add(this.lblTitle);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ProjectCreate";
             this.Text = "Create a Project";
             this.tableLayoutPanel1.ResumeLayout(false);

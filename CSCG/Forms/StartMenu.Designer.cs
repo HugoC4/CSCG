@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StartMenu));
             this.lblWelcomeMessage = new System.Windows.Forms.Label();
             this.lblTitle = new System.Windows.Forms.Label();
             this.btnNewProject = new System.Windows.Forms.Button();
@@ -59,7 +60,7 @@
             this.btnNewProject.Location = new System.Drawing.Point(12, 116);
             this.btnNewProject.Name = "btnNewProject";
             this.btnNewProject.Size = new System.Drawing.Size(280, 67);
-            this.btnNewProject.TabIndex = 7;
+            this.btnNewProject.TabIndex = 1;
             this.btnNewProject.Text = "New Project";
             this.btnNewProject.UseVisualStyleBackColor = true;
             this.btnNewProject.Click += new System.EventHandler(this.btnNewProject_Click);
@@ -69,7 +70,7 @@
             this.btnOpenProject.Location = new System.Drawing.Point(12, 189);
             this.btnOpenProject.Name = "btnOpenProject";
             this.btnOpenProject.Size = new System.Drawing.Size(280, 67);
-            this.btnOpenProject.TabIndex = 6;
+            this.btnOpenProject.TabIndex = 2;
             this.btnOpenProject.Text = "Open Project";
             this.btnOpenProject.UseVisualStyleBackColor = true;
             this.btnOpenProject.Click += new System.EventHandler(this.btnOpenProject_Click);
@@ -79,7 +80,7 @@
             this.btnExit.Location = new System.Drawing.Point(12, 262);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(280, 67);
-            this.btnExit.TabIndex = 5;
+            this.btnExit.TabIndex = 3;
             this.btnExit.Text = "Exit";
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
@@ -94,6 +95,7 @@
             this.Controls.Add(this.btnNewProject);
             this.Controls.Add(this.btnOpenProject);
             this.Controls.Add(this.btnExit);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "StartMenu";
             this.Text = "C# Class Generator";
             this.ResumeLayout(false);

@@ -21,18 +21,32 @@ namespace CSCG.Controls
         public ProjectList()
         {
             InitializeComponent();
-            if (DesignMode) return;
-            foreach (Project project in Program.Db.Projects)
+            try
             {
-                var summary = new ProjectSummary(project) { Dock = DockStyle.Top };
-                summary.RegisterClick(OnProjectClick);
-                pnlList.Controls.Add(summary);
-                ProjectSummaries.Add(ProjectSummaries.Count, summary);
+                foreach (Project project in Program.Db.Projects)
+                {
+                    var summary = new ProjectSummary(project) {Dock = DockStyle.Top};
+                    summary.RegisterClick(OnProjectClick);
+                    pnlList.Controls.Add(summary);
+                    ProjectSummaries.Add(ProjectSummaries.Count, summary);
 
+                }
+            }
+            catch
+            {
+                // Ignored
             }
         }
 
-        public void OnProjectClick(object sender, EventArgs e)
+        public void RemoveProject(int index)
+        {
+            SelectedIndex = null;
+            SelectedProject = null;
+            pnlList.Controls.Remove(ProjectSummaries[index]);
+            ProjectSummaries.Remove(index);
+        }
+
+        private void OnProjectClick(object sender, EventArgs e)
         {
             ProjectSummary pjs = sender as ProjectSummary;
             if (pjs == null) return;

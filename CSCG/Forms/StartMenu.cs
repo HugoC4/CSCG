@@ -46,7 +46,12 @@ namespace CSCG.Forms
         private void btnOpenProject_Click(object sender, EventArgs e)
         {
             ProjectSelect projectSelect = new ProjectSelect();
-            if (projectSelect.ShowDialog(this) != DialogResult.OK) return;
+            if (projectSelect.ShowDialog(this) != DialogResult.OK)
+            {
+                if (!Program.Db.Projects.Any())
+                   btnOpenProject.Enabled = false;
+                return;
+            }
 
             Project selectedProject = projectSelect.SelectedProject();
             projectSelect.Dispose();
