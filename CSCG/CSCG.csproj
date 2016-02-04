@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Code\Accessibility.cs" />
     <Compile Include="Controls\ProjectList.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -69,6 +70,12 @@
     </Compile>
     <Compile Include="CSCGContext.cs" />
     <Compile Include="CSCGDbConfig.cs" />
+    <Compile Include="Forms\MainProgram.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MainProgram.Designer.cs">
+      <DependentUpon>MainProgram.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ProjectCreate.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -96,7 +103,17 @@
       <DependentUpon>201602031940398_ProjectNamespace.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Accessible.cs" />
+    <Compile Include="Models\Class.cs" />
+    <Compile Include="Models\Constructor.cs" />
+    <Compile Include="Models\Field.cs" />
+    <Compile Include="Models\Interface.cs" />
+    <Compile Include="Models\Method.cs" />
+    <Compile Include="Models\Namespace.cs" />
+    <Compile Include="Models\Parameter.cs" />
     <Compile Include="Models\Project.cs" />
+    <Compile Include="Models\Property.cs" />
+    <Compile Include="Models\Test.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Controls\ProjectList.resx">
@@ -104,6 +121,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ProjectSummary.resx">
       <DependentUpon>ProjectSummary.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MainProgram.resx">
+      <DependentUpon>MainProgram.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ProjectCreate.resx">
       <DependentUpon>ProjectCreate.cs</DependentUpon>

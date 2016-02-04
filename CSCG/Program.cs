@@ -30,6 +30,7 @@ namespace CSCG
         {
             // Close DB connections
             // Stops Threads
+            Db.Dispose();
             Application.Exit();
         }
     }
