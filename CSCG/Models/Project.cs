@@ -17,6 +17,6 @@ namespace CSCG.Models
         public DateTime Created { get; set; }
         public DateTime Updated { get; set; }
         public Accessibility DefaultAccessibility { get; set; }
-        public List<string> DefaultInternalUsings { get; set; }
+        public virtual List<Namespace> Namespaces { get; set; }
     }
 }

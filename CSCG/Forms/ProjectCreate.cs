@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CSCG.Code;
 
 namespace CSCG.Forms
 {
@@ -15,13 +16,15 @@ namespace CSCG.Forms
     {
         public string Title => txtTitle.Text.Trim();
         public string Namespace => txtNamespace.Text.Trim();
-
-        private bool CorrectTitle { get; set; } = false;
-        private bool CorrectNamespace { get; set; } = false;
+        public Accessibility Accessibility => (Accessibility) cmbAccessibility.SelectedItem;
 
         public ProjectCreate()
         {
             InitializeComponent();
+            foreach (Accessibility enm in Enum.GetValues(typeof(Accessibility)))
+                cmbAccessibility.Items.Add(enm);
+            cmbAccessibility.SelectedIndex = 0;
+
         }
 
         private void btnCreate_Click(object sender, EventArgs e)

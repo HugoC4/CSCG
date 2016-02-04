@@ -55,7 +55,7 @@ namespace CSCG.Forms
 
             Project selectedProject = projectSelect.SelectedProject();
             projectSelect.Dispose();
-            // TODO: Load existing project!
+            OpenProject(selectedProject);
         }
 
         private void btnNewProject_Click(object sender, EventArgs e)
@@ -65,20 +65,36 @@ namespace CSCG.Forms
 
             Project project = new Project()
             {
-                Title = projectCreate.Title.Trim(),
-                Namespace = projectCreate.Namespace.Trim(),
+                Title = projectCreate.Title,
+                Namespace = projectCreate.Namespace,
                 Created = DateTime.Now,
-                Updated = DateTime.Now
+                Updated = DateTime.Now,
+                DefaultAccessibility = projectCreate.Accessibility
             };
 
-
             Program.Db.Projects.Add(project);
-            Program.Db.SaveChangesAsync();
+            Program.Db.SaveChanges();
 
             btnOpenProject.Enabled = true;
             projectCreate.Dispose();
+            OpenProject(project);
+        }
 
-            // TODO: Load new project
+        private void OpenProject(Project project)
+        {
+            MainProgram main = new MainProgram(project);
+            Hide();
+            var result = main.ShowDialog(this);
+            Show();
+            if (result != DialogResult.OK)
+            {
+                // Fail?
+            }
+            else
+            {
+                // Success?
+            }
+            main.Dispose();
         }
     }
 }
