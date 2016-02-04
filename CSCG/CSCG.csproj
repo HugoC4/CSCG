@@ -102,6 +102,14 @@
     <Compile Include="Migrations\201602031940398_ProjectNamespace.Designer.cs">
       <DependentUpon>201602031940398_ProjectNamespace.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201602041906314_ClassModels.cs" />
+    <Compile Include="Migrations\201602041906314_ClassModels.Designer.cs">
+      <DependentUpon>201602041906314_ClassModels.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602041909425_ClassModelTypes.cs" />
+    <Compile Include="Migrations\201602041909425_ClassModelTypes.Designer.cs">
+      <DependentUpon>201602041909425_ClassModelTypes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Accessible.cs" />
     <Compile Include="Models\Class.cs" />
@@ -113,7 +121,6 @@
     <Compile Include="Models\Parameter.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\Property.cs" />
-    <Compile Include="Models\Test.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Controls\ProjectList.resx">
@@ -139,6 +146,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201602031940398_ProjectNamespace.resx">
       <DependentUpon>201602031940398_ProjectNamespace.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602041906314_ClassModels.resx">
+      <DependentUpon>201602041906314_ClassModels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602041909425_ClassModelTypes.resx">
+      <DependentUpon>201602041909425_ClassModelTypes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

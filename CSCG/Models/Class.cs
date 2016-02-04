@@ -17,6 +17,7 @@ namespace CSCG.Models
         public virtual Class Extends { get; set; }
         public virtual List<Interface> Implements { get; set; }
         public virtual List<Namespace> Usings { get; set; }
+        public virtual List<string> InternalUsings { get; set; }
         public virtual Namespace Namespace { get; set; }
         public virtual List<Property> Properties { get; set; }
         public virtual List<Field> Fields { get; set; }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,9 +14,8 @@ namespace CSCG.Models
         [Key]
         public int MethodId { get; set; }
         public string Name { get; set; }
+        public string ReturnTypeNamespace { get; set; }
         public string ReturnTypeName { get; set; }
-        public Type ReturnType { get; set; }
-        public bool HasCustomReturnType { get; set; }
 
         public virtual Dictionary<int, Parameter> Parameters { get; set; }
 

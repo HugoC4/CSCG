@@ -12,6 +12,7 @@ namespace CSCG.Code
         Private,
         Protected,
         Internal,
-        ProtectedInternal
+        ProtectedInternal,
+        None
     }
 }
