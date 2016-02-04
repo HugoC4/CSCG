@@ -110,6 +110,10 @@
     <Compile Include="Migrations\201602041909425_ClassModelTypes.Designer.cs">
       <DependentUpon>201602041909425_ClassModelTypes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201602041912448_ClassModelUsing.cs" />
+    <Compile Include="Migrations\201602041912448_ClassModelUsing.Designer.cs">
+      <DependentUpon>201602041912448_ClassModelUsing.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Accessible.cs" />
     <Compile Include="Models\Class.cs" />
@@ -152,6 +156,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201602041909425_ClassModelTypes.resx">
       <DependentUpon>201602041909425_ClassModelTypes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602041912448_ClassModelUsing.resx">
+      <DependentUpon>201602041912448_ClassModelUsing.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
