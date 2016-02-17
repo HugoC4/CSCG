@@ -1,15 +1,8 @@
 ﻿using System;
-using System.CodeDom;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using CSCG.Code;
+using CSCG.Helpers;
 using CSCG.Models;
 
 namespace CSCG.Forms
@@ -17,75 +10,106 @@ namespace CSCG.Forms
     public partial class MainProgram : Form
     {
         private Project Project { get; set; }
-        private Dictionary<string, List<Type>> AvailableClasses { get; set; }
-
-        private enum ViewState
-        {
-            Project
-        }
+        private TreeHelper Tree { get; set; }
 
         public MainProgram(Project project)
         {
             InitializeComponent();
             Project = project;
-            AvailableClasses = GetClasses();
-            TreeNode root = new TreeNode($"{project.Title} ({project.Namespace})");
+            Tree = new TreeHelper(tvProject);
 
-            lblProjectId.Text = $"Id: {project.ProjectId}";
-            lblProjectTitle.Text = $"Title: {project.Title}";
-            lblProjectNamespace.Text = $"Namespace: {project.Namespace}";
-            lblProjectCreated.Text = $"Created: {project.Created.ToShortDateString()} {project.Created.ToShortTimeString()}";
-            lblProjectUpdated.Text = $"Updated: {project.Updated.ToShortDateString()} {project.Updated.ToShortTimeString()}";
+            Tree.LoadProject(Project);
 
-            foreach (Namespace ns in project.Namespaces)
-            {
-                lvNamespaces.Items.Add(new ListViewItem() {SubItems =
-                {
-                    ns.NamespaceId.ToString(),
-                    ns.Name,
-                    $"{project.Namespace}.{ns.Name}",
-                    ns.Classes.Count(p => !p.IsAbstract).ToString(),
-                    ns.Classes.Count(p => p.IsAbstract).ToString(),
-                    ns.Interfaces.Count().ToString()
-                }});
-
-                root.Nodes.Add(new TreeNode($"{ns.Name} ({project.Namespace}.{ns.Name})"));
-            }
-
-            tvProject.Nodes.Add(root);
-
+            //lblProjectId.Text = $"Id: {project.ProjectId}";
+            //lblProjectTitle.Text = $"Title: {project.Title}";
+            //lblProjectNamespace.Text = $"Namespace: {project.Namespace}";
+            //lblProjectCreated.Text = $"Created: {project.Created.ToShortDateString()} {project.Created.ToShortTimeString()}";
+            //lblProjectUpdated.Text = $"Updated: {project.Updated.ToShortDateString()} {project.Updated.ToShortTimeString()}";
+            
             ChangeView(ViewState.Project);
         }
 
         private void ChangeView(ViewState state)
         {
+            while (tcProject.TabPages.Count > 0)
+                tcProject.TabPages.RemoveAt(0);
             switch (state)
             {
                 case ViewState.Project:
-                    while(tcProject.TabPages.Count > 0)
-                        tcProject.TabPages.RemoveAt(0);
                     tcProject.TabPages.Add(tpProject);
                     tcProject.TabPages.Add(tpNamespaces);
                     break;
             }
         }
 
-        static Dictionary<string, List<Type>> GetClasses()
+        private void tvProject_MouseUp(object sender, MouseEventArgs e)
         {
-            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-            Dictionary<string, List<Type>> result = new Dictionary<string, List<Type>>();
-            foreach (var assembly in assemblies)
-            {
-                var classes = assembly.GetTypes().Where(t => t.IsClass && t.Namespace != null && !t.Namespace.StartsWith("CSCG"));
-                foreach (var cls in classes)
-                    if(result.ContainsKey(cls.Namespace))
-                        result[cls.Namespace].Add(cls);
-                    else
-                        result[cls.Namespace] = new List<Type>() {cls};
-                
-            }
+            // Show menu only if the right mouse button is clicked.
+            if (e.Button != MouseButtons.Right)
+                return;
+            // Point where the mouse is clicked.
+            Point p = new Point(e.X, e.Y);
+            // Get the node that the user has clicked.
+            TreeNode node = tvProject.GetNodeAt(p);
+            if (node == null)
+                return;
 
-            return result;
+            // Select the node the user has clicked.
+            // The node appears selected until the menu is displayed on the screen.
+            //var oldSelectNode = tvProject.SelectedNode;
+            tvProject.SelectedNode = node;
+            // Get the nodetype
+            NodeType nt = Tree.GetNodeType(node);
+
+            if (nt == NodeType.Root || nt == NodeType.Namespace)
+                cmNsRemove.Enabled = nt == NodeType.Namespace;
+
+            else
+                cmClassAddConstructor.Enabled = nt != NodeType.Interface;
+            // Show context menu
+            cmNamespace.Show(tvProject, p);
+            // Highlight the selected node.
+            //tvProject.SelectedNode = oldSelectNode;
+        }
+
+        private void cmNsAddClass_Click(object sender, EventArgs e)
+        {
+           /* NodeType nt = (NodeType)((ToolStripMenuItem) sender).Tag;
+            TreeNode node = new TreeNode($"Je Moeder ({tvProject.SelectedNode.Text})");
+            node.Tag = nt;
+            node.ImageIndex = _imageIndices[nt];
+            node.SelectedImageIndex = _imageIndices[nt];
+            tvProject.SelectedNode.Nodes.Add(node);*/
+        }
+
+        private void cmNsAddNamespace_Click(object sender, EventArgs e)
+        {
+            AddNamespace an;
+            if (Tree.GetNamespace(tvProject.SelectedNode) != null)
+                an = new AddNamespace(Tree.GetNamespace(tvProject.SelectedNode));
+            else 
+                an = new AddNamespace(Project);
+
+            if (an.ShowDialog(this) == DialogResult.OK)
+            {
+                Namespace ns = new Namespace() {Name = an.Namespace, Project = Project};
+                (Tree.GetNamespace(tvProject.SelectedNode).Namespaces ?? Project.Namespaces).Add(ns);
+                Program.Db.SaveChanges();
+                Tree.AddNamespace(tvProject.SelectedNode, ns);
+            }
+            an.Dispose();
+        }
+
+        private void cmNsRemove_Click(object sender, EventArgs e)
+        {
+            TreeNode node = tvProject.SelectedNode;
+            if ( MessageBox.Show($"Are you sure you want to delete the namespace: {node.Text}?", "You sure?",
+                    MessageBoxButtons.YesNoCancel) == DialogResult.Yes)
+            {
+                Program.Db.Namespaces.Remove(Tree.GetNamespace(node));
+                Program.Db.SaveChanges();
+                Tree.RemoveNode(node);
+            }
         }
     }
 }

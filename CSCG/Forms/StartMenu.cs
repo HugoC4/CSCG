@@ -30,6 +30,21 @@ namespace CSCG.Forms
             InitializeComponent();
             if (!Program.Db.Projects.Any())
                 btnOpenProject.Enabled = false;
+            /*
+            foreach (string c in WelcomeMessages)
+            {
+                Namespace ns = new Namespace()
+                {
+                    Name = c.Replace(" ", "").ToLower(),
+                    Project = Program.Db.Projects.First()
+                };
+
+                Program.Db.Projects.First().Namespaces.Add(ns);
+            }
+
+            Program.Db.SaveChanges();
+            Console.WriteLine("Kek");
+            */
         }
 
         protected override void OnShown(EventArgs e)

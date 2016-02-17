@@ -70,6 +70,12 @@
     </Compile>
     <Compile Include="CSCGContext.cs" />
     <Compile Include="CSCGDbConfig.cs" />
+    <Compile Include="Forms\AddNamespace.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AddNamespace.Designer.cs">
+      <DependentUpon>AddNamespace.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\MainProgram.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -94,6 +100,9 @@
     <Compile Include="Forms\ProjectSelect.Designer.cs">
       <DependentUpon>ProjectSelect.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\TypeHelper.cs" />
+    <Compile Include="Helpers\TreeHelper.cs" />
+    <Compile Include="Helpers\TreeNodeMetaData.cs" />
     <Compile Include="Migrations\201602031927396_Project.cs" />
     <Compile Include="Migrations\201602031927396_Project.Designer.cs">
       <DependentUpon>201602031927396_Project.cs</DependentUpon>
@@ -139,11 +148,15 @@
     <Compile Include="Models\Property.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Types.cs" />
     <EmbeddedResource Include="Controls\ProjectList.resx">
       <DependentUpon>ProjectList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ProjectSummary.resx">
       <DependentUpon>ProjectSummary.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AddNamespace.resx">
+      <DependentUpon>AddNamespace.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainProgram.resx">
       <DependentUpon>MainProgram.cs</DependentUpon>
@@ -208,6 +221,7 @@
   <ItemGroup>
     <Content Include="Resources\cscg.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
