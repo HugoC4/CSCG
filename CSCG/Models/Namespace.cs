@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CSCG.Models
 {
-    public class Namespace
+    public class Namespace : ModelBase
     {
         [Key]
         public int NamespaceId { get; set; }

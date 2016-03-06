@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CSCG.Code;
 
 namespace CSCG.Models
 {
-    public class Property : Accessible
+    public class Property : ModelBase
     {
         [Key]
         public int PropertyId { get; set; }
@@ -19,6 +13,7 @@ namespace CSCG.Models
         public bool ReadOnly { get; set; } = false;
 
         public virtual Class Class { get; set; }
+        public Accessibility Accessibility { get; set; }
 
         public static Accessibility DefaultAccessibility = Accessibility.Private;
         public static List<Accessibility> AllowedAccessibilities = new List<Accessibility>()

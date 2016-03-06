@@ -1,9 +1,8 @@
 namespace CSCG.Migrations
 {
-    using System;
     using System.Data.Entity.Migrations;
     
-    public partial class ClassModels : DbMigration
+    public partial class Initial : DbMigration
     {
         public override void Up()
         {
@@ -44,6 +43,7 @@ namespace CSCG.Migrations
                 c => new
                     {
                         FieldId = c.Int(nullable: false, identity: true),
+                        TypeNamespace = c.String(),
                         TypeName = c.String(),
                         ReadOnly = c.Boolean(nullable: false),
                         Accessibility = c.Int(nullable: false),
@@ -84,6 +84,7 @@ namespace CSCG.Migrations
                     {
                         MethodId = c.Int(nullable: false, identity: true),
                         Name = c.String(),
+                        ReturnTypeNamespace = c.String(),
                         ReturnTypeName = c.String(),
                         Accessibility = c.Int(nullable: false),
                         Class_ClassId = c.Int(),
@@ -102,25 +103,37 @@ namespace CSCG.Migrations
                         NamespaceId = c.Int(nullable: false, identity: true),
                         Name = c.String(),
                         Parent_NamespaceId = c.Int(),
-                        Project_ProjectId = c.Int(),
                         Interface_InterfaceId = c.Int(),
                         Class_ClassId = c.Int(),
                     })
                 .PrimaryKey(t => t.NamespaceId)
                 .ForeignKey("dbo.Namespaces", t => t.Parent_NamespaceId)
-                .ForeignKey("dbo.Projects", t => t.Project_ProjectId)
                 .ForeignKey("dbo.Interfaces", t => t.Interface_InterfaceId)
                 .ForeignKey("dbo.Classes", t => t.Class_ClassId)
                 .Index(t => t.Parent_NamespaceId)
-                .Index(t => t.Project_ProjectId)
                 .Index(t => t.Interface_InterfaceId)
                 .Index(t => t.Class_ClassId);
+            
+            CreateTable(
+                "dbo.Projects",
+                c => new
+                    {
+                        ProjectId = c.Int(nullable: false),
+                        Title = c.String(),
+                        Created = c.DateTime(nullable: false),
+                        Updated = c.DateTime(nullable: false),
+                        DefaultAccessibility = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.ProjectId)
+                .ForeignKey("dbo.Namespaces", t => t.ProjectId)
+                .Index(t => t.ProjectId);
             
             CreateTable(
                 "dbo.Properties",
                 c => new
                     {
                         PropertyId = c.Int(nullable: false, identity: true),
+                        TypeNamespace = c.String(),
                         TypeName = c.String(),
                         IsAutoProperty = c.Boolean(nullable: false),
                         ReadOnly = c.Boolean(nullable: false),
@@ -140,11 +153,11 @@ namespace CSCG.Migrations
                     {
                         ParemetedId = c.Int(nullable: false, identity: true),
                         Name = c.String(),
+                        TypeNamespace = c.String(),
                         TypeName = c.String(),
                     })
                 .PrimaryKey(t => t.ParemetedId);
             
-            AddColumn("dbo.Projects", "DefaultAccessibility", c => c.Int(nullable: false));
         }
         
         public override void Down()
@@ -156,7 +169,7 @@ namespace CSCG.Migrations
             DropForeignKey("dbo.Properties", "Interface_InterfaceId", "dbo.Interfaces");
             DropForeignKey("dbo.Properties", "Class_ClassId", "dbo.Classes");
             DropForeignKey("dbo.Interfaces", "Namespace_NamespaceId1", "dbo.Namespaces");
-            DropForeignKey("dbo.Namespaces", "Project_ProjectId", "dbo.Projects");
+            DropForeignKey("dbo.Projects", "ProjectId", "dbo.Namespaces");
             DropForeignKey("dbo.Namespaces", "Parent_NamespaceId", "dbo.Namespaces");
             DropForeignKey("dbo.Interfaces", "Namespace_NamespaceId", "dbo.Namespaces");
             DropForeignKey("dbo.Classes", "Namespace_NamespaceId", "dbo.Namespaces");
@@ -169,9 +182,9 @@ namespace CSCG.Migrations
             DropForeignKey("dbo.Constructors", "Class_ClassId", "dbo.Classes");
             DropIndex("dbo.Properties", new[] { "Interface_InterfaceId" });
             DropIndex("dbo.Properties", new[] { "Class_ClassId" });
+            DropIndex("dbo.Projects", new[] { "ProjectId" });
             DropIndex("dbo.Namespaces", new[] { "Class_ClassId" });
             DropIndex("dbo.Namespaces", new[] { "Interface_InterfaceId" });
-            DropIndex("dbo.Namespaces", new[] { "Project_ProjectId" });
             DropIndex("dbo.Namespaces", new[] { "Parent_NamespaceId" });
             DropIndex("dbo.Methods", new[] { "Interface_InterfaceId" });
             DropIndex("dbo.Methods", new[] { "Class_ClassId" });
@@ -185,9 +198,9 @@ namespace CSCG.Migrations
             DropIndex("dbo.Classes", new[] { "Namespace_NamespaceId1" });
             DropIndex("dbo.Classes", new[] { "Namespace_NamespaceId" });
             DropIndex("dbo.Classes", new[] { "Extends_ClassId" });
-            DropColumn("dbo.Projects", "DefaultAccessibility");
             DropTable("dbo.Parameters");
             DropTable("dbo.Properties");
+            DropTable("dbo.Projects");
             DropTable("dbo.Namespaces");
             DropTable("dbo.Methods");
             DropTable("dbo.Interfaces");

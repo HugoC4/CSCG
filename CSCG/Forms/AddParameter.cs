@@ -2,37 +2,49 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using CSCG.Controls;
+using CSCG.Helpers;
 using CSCG.Models;
 
 namespace CSCG.Forms
 {
-    public partial class AddNamespace : Form
+    public partial class AddParameter : Form
     {
-        private Namespace NsParent { get; set; }
-        public string Namespace => txtName.Text.Trim();
+        public Parameter Parameter { get; set; }
+        private ParamList ParamList { get; set; }
 
-        public AddNamespace()
+        public AddParameter()
         {
             InitializeComponent();
         }
-
-        public AddNamespace(Namespace parent)
+        /*
+        public AddParameter(ParamList list)
         {
             InitializeComponent();
-            NsParent = parent;
+            foreach(var ns in )
+                cbNamespace.Items.Add(ns.)
+            foreach (var kv in TypeHelper.GetClasses())
+                cbNamespace.Items.Add(kv.Value);
+            
+            ParamList = list;
         }
+
+        public LoadNamespace(Namespace ns)
+        {
+            
+        }*/
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             
             if(!Regex.IsMatch(txtName.Text.Trim(), @"^[_a-zA-z][_\-a-zA-z0-9]*$"))
             {
-                lblError.Text = "Incorrect namespace format!";
+                lblError.Text = "Incorrect identifier format!";
                 btnAdd.Enabled = false;
             }
-            else if (NsParent.Namespaces.Any(p => p.Name == txtName.Text.Trim()))
+            else if (ParamList.Parameters.Any(p => p.Value.Name == txtName.Text.Trim()))
             {
-                lblError.Text = "This namespace already exists!";
+                lblError.Text = "This parameter name already exists!";
                 btnAdd.Enabled = false;
             }
             else

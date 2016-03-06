@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CSCG.Code;
 
 namespace CSCG.Models
 {
-    public class Interface : Accessible
+    public class Interface : ModelBase
     {
         [Key]
         public int InterfaceId { get; set; }
@@ -20,6 +15,7 @@ namespace CSCG.Models
         public virtual List<Property> Properties { get; set; }
         public virtual List<Field> Fields { get; set; }
         public virtual List<Method> Methods { get; set; }
+        public Accessibility Accessibility { get; set; }
 
 
         public static Accessibility DefaultAccessibility = Accessibility.Public;

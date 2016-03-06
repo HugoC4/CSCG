@@ -1,18 +1,15 @@
 namespace CSCG.Migrations
 {
-    using System;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
-    using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<CSCGContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<CSCG.CSCGContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(CSCGContext context)
+        protected override void Seed(CSCG.CSCGContext context)
         {
             //  This method will be called after migrating to the latest version.
 

@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using CSCG.Code;
 using CSCG.Models;
 
 namespace CSCG.Helpers
@@ -31,17 +28,34 @@ namespace CSCG.Helpers
 
         public void LoadProject(Project project)
         {
-            TreeNode node = AddRoot(project);
-            LoadNamespaces(node, project.Namespaces);
+            TreeNode root = AddNamespace(null, project.Namespace);
+            LoadNamespace(root, project.Namespace);
+            ExpandAllNamespaces(root);
         }
 
-        private void LoadNamespaces(TreeNode parent, List<Namespace> namespaces)
+        private void ExpandAllNamespaces(TreeNode node)
         {
-            foreach (var ns in namespaces)
+            if (IsNamespace(node))
             {
-                TreeNode node = AddNamespace(parent, ns);
-                LoadNamespaces(node, ns.Namespaces);
+                node.Expand();
+                foreach(TreeNode n in node.Nodes)
+                    ExpandAllNamespaces(n);
             }
+        }
+
+        private void LoadNamespace(TreeNode parent, Namespace _namespace)
+        {
+            foreach (var ns in _namespace.Namespaces)
+                LoadNamespace(AddNamespace(parent, ns), ns);
+            foreach (var cls in _namespace.Classes)
+                AddClass(parent, cls);
+            foreach (var intf in _namespace.Interfaces)
+                AddInterface(parent, intf);
+        }
+
+        private bool IsNamespace(TreeNode node)
+        {
+            return GetNodeType(node) == NodeType.Namespace;
         }
 
         public Namespace GetNamespace(TreeNode node)
@@ -59,13 +73,6 @@ namespace CSCG.Helpers
             return node?.Tag as TreeNodeMetaData;
         }
 
-        public TreeNode AddRoot(Project project)
-        {
-            return AddNode(NodeType.Root, null, project.Namespace, new TreeNodeMetaData() { 
-                Project = project
-            });
-        }
-
         public TreeNode AddNamespace(TreeNode parent, Namespace ns)
         {
             return AddNode(NodeType.Namespace, parent, ns.Name, new TreeNodeMetaData()
@@ -74,27 +81,59 @@ namespace CSCG.Helpers
             });
         }
 
+        public TreeNode AddClass(TreeNode parent, Class cls)
+        {
+            TreeNode node =  AddNode(cls.IsAbstract ? NodeType.Abstract : NodeType.Class, parent, cls.Name, new TreeNodeMetaData()
+            {
+                Class = cls
+            }, cls.Accessibility);
+            foreach (var ctor in cls.Constructors)
+            {
+                AddNode(NodeType.Constructor, node, "Constructor", new TreeNodeMetaData()
+                {
+                    Constructor = ctor
+                }, ctor.Accessibility, null, ctor.Parameters);
+            }
+            return node;
+        }
+
+        public TreeNode AddInterface(TreeNode parent, Interface intf)
+        {
+            TreeNode node = AddNode(NodeType.Interface, parent, intf.Name, new TreeNodeMetaData()
+            {
+                Interface = intf
+            }, intf.Accessibility);
+            return node;
+        }
+
         public void RemoveNode(TreeNode node)
         {
             node.Remove();
         }
 
-        private TreeNode AddNode(NodeType nodeType, TreeNode parent, string text, TreeNodeMetaData metaData, Accessibility? accessibility = null, string type = null)
+        private TreeNode AddNode(NodeType nodeType, TreeNode parent, string text, TreeNodeMetaData metaData, Accessibility? accessibility = null, string type = null, Dictionary<int, Parameter> parameters = null)
         {
+            parameters = parameters ?? new Dictionary<int, Parameter>();
             TreeNode node = new TreeNode()
             {
                 ImageIndex = _imageIndices[nodeType],
                 SelectedImageIndex = _imageIndices[nodeType]
             };
 
-            if (nodeType == NodeType.Namespace)
+            if (nodeType == NodeType.Namespace && parent?.Text != null)
                 node.Text = $"{parent.Text}.";
             if (accessibility.HasValue)
-                node.Text = $"({accessibility}) ";
+            {
+                node.Text = $"{accessibility.Value} ";
+                metaData.Accessibility = accessibility.Value;
+            }
             if (type != null)
                 node.Text += $"{type} ";
 
             node.Text += text;
+            if (nodeType == NodeType.Constructor || nodeType == NodeType.Method)
+                node.Text += $"({string.Join(", ", parameters.Select(p => p.Value.Name))})";
+
             metaData.NodeType = nodeType;
             node.Tag = metaData;
 

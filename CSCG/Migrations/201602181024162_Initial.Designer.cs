@@ -7,13 +7,13 @@ namespace CSCG.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class ClassModelUsing : IMigrationMetadata
+    public sealed partial class Initial : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(ClassModelUsing));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Initial));
         
         string IMigrationMetadata.Id
         {
-            get { return "201602041912448_ClassModelUsing"; }
+            get { return "201602181024162_Initial"; }
         }
         
         string IMigrationMetadata.Source

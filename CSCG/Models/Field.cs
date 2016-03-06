@@ -1,21 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CSCG.Code;
 
 namespace CSCG.Models
 {
-    public class Field : Accessible
+    public class Field : ModelBase
     {
         [Key]
         public int FieldId { get; set; }
         public string TypeNamespace { get; set; }
         public string TypeName { get; set; }
         public bool ReadOnly { get; set; } = false;
+        public Accessibility Accessibility { get; set; }
 
         public virtual Class Class { get; set; }
 

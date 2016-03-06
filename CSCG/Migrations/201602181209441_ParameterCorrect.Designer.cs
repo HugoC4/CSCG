@@ -7,13 +7,13 @@ namespace CSCG.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class ClassModels : IMigrationMetadata
+    public sealed partial class ParameterCorrect : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(ClassModels));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(ParameterCorrect));
         
         string IMigrationMetadata.Id
         {
-            get { return "201602041906314_ClassModels"; }
+            get { return "201602181209441_ParameterCorrect"; }
         }
         
         string IMigrationMetadata.Source

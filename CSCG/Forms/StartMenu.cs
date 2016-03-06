@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using CSCG.Models;
 
@@ -30,21 +25,6 @@ namespace CSCG.Forms
             InitializeComponent();
             if (!Program.Db.Projects.Any())
                 btnOpenProject.Enabled = false;
-            /*
-            foreach (string c in WelcomeMessages)
-            {
-                Namespace ns = new Namespace()
-                {
-                    Name = c.Replace(" ", "").ToLower(),
-                    Project = Program.Db.Projects.First()
-                };
-
-                Program.Db.Projects.First().Namespaces.Add(ns);
-            }
-
-            Program.Db.SaveChanges();
-            Console.WriteLine("Kek");
-            */
         }
 
         protected override void OnShown(EventArgs e)
@@ -81,7 +61,7 @@ namespace CSCG.Forms
             Project project = new Project()
             {
                 Title = projectCreate.Title,
-                Namespace = projectCreate.Namespace,
+                Namespace = new Namespace() {Name = projectCreate.Namespace },
                 Created = DateTime.Now,
                 Updated = DateTime.Now,
                 DefaultAccessibility = projectCreate.Accessibility
@@ -101,6 +81,7 @@ namespace CSCG.Forms
             Hide();
             var result = main.ShowDialog(this);
             Show();
+            Program.Project = project;
             if (result != DialogResult.OK)
             {
                 // Fail?

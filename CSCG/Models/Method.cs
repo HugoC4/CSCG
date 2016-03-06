@@ -1,23 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CSCG.Code;
 
 namespace CSCG.Models
 {
-    public class Method : Accessible
+    public class Method : ModelBase
     {
         [Key]
         public int MethodId { get; set; }
         public string Name { get; set; }
-        public string ReturnTypeNamespace { get; set; }
-        public string ReturnTypeName { get; set; }
+        public Parameter Return { get; set; }
 
         public virtual Dictionary<int, Parameter> Parameters { get; set; }
+        public Accessibility Accessibility { get; set; }
 
         public virtual Class Class { get; set; }
 

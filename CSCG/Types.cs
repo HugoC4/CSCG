@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CSCG
+﻿namespace CSCG
 {
     public enum ViewState
     {
@@ -12,7 +6,6 @@ namespace CSCG
         Namespace,
 
     }
-
     public enum NodeType
     {
         Root,
@@ -24,5 +17,14 @@ namespace CSCG
         Field,
         Property,
         Method
+    }
+    public enum Accessibility
+    {
+        Public,
+        Private,
+        Protected,
+        Internal,
+        ProtectedInternal,
+        None
     }
 }

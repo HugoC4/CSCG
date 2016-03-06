@@ -55,7 +55,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Code\Accessibility.cs" />
+    <Compile Include="Controls\ParamList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ParamList.Designer.cs">
+      <DependentUpon>ParamList.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ProjectList.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -70,6 +75,24 @@
     </Compile>
     <Compile Include="CSCGContext.cs" />
     <Compile Include="CSCGDbConfig.cs" />
+    <Compile Include="Forms\AddClass.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AddClass.Designer.cs">
+      <DependentUpon>AddClass.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AddCtor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AddCtor.Designer.cs">
+      <DependentUpon>AddCtor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AddParameter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AddParameter.Designer.cs">
+      <DependentUpon>AddParameter.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\AddNamespace.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -103,45 +126,25 @@
     <Compile Include="Helpers\TypeHelper.cs" />
     <Compile Include="Helpers\TreeHelper.cs" />
     <Compile Include="Helpers\TreeNodeMetaData.cs" />
-    <Compile Include="Migrations\201602031927396_Project.cs" />
-    <Compile Include="Migrations\201602031927396_Project.Designer.cs">
-      <DependentUpon>201602031927396_Project.cs</DependentUpon>
+    <Compile Include="Migrations\201602181024162_Initial.cs" />
+    <Compile Include="Migrations\201602181024162_Initial.Designer.cs">
+      <DependentUpon>201602181024162_Initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201602031940398_ProjectNamespace.cs" />
-    <Compile Include="Migrations\201602031940398_ProjectNamespace.Designer.cs">
-      <DependentUpon>201602031940398_ProjectNamespace.cs</DependentUpon>
+    <Compile Include="Migrations\201602181205221_ReturnParameter.cs" />
+    <Compile Include="Migrations\201602181205221_ReturnParameter.Designer.cs">
+      <DependentUpon>201602181205221_ReturnParameter.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201602041906314_ClassModels.cs" />
-    <Compile Include="Migrations\201602041906314_ClassModels.Designer.cs">
-      <DependentUpon>201602041906314_ClassModels.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201602041909425_ClassModelTypes.cs" />
-    <Compile Include="Migrations\201602041909425_ClassModelTypes.Designer.cs">
-      <DependentUpon>201602041909425_ClassModelTypes.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201602041912448_ClassModelUsing.cs" />
-    <Compile Include="Migrations\201602041912448_ClassModelUsing.Designer.cs">
-      <DependentUpon>201602041912448_ClassModelUsing.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201602041959205_ProjectNamespaces.cs" />
-    <Compile Include="Migrations\201602041959205_ProjectNamespaces.Designer.cs">
-      <DependentUpon>201602041959205_ProjectNamespaces.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201602041959455_ProjectNamespaces1.cs" />
-    <Compile Include="Migrations\201602041959455_ProjectNamespaces1.Designer.cs">
-      <DependentUpon>201602041959455_ProjectNamespaces1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201602042000337_ProjectNamespaces2.cs" />
-    <Compile Include="Migrations\201602042000337_ProjectNamespaces2.Designer.cs">
-      <DependentUpon>201602042000337_ProjectNamespaces2.cs</DependentUpon>
+    <Compile Include="Migrations\201602181209441_ParameterCorrect.cs" />
+    <Compile Include="Migrations\201602181209441_ParameterCorrect.Designer.cs">
+      <DependentUpon>201602181209441_ParameterCorrect.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\Accessible.cs" />
     <Compile Include="Models\Class.cs" />
     <Compile Include="Models\Constructor.cs" />
     <Compile Include="Models\Field.cs" />
     <Compile Include="Models\Interface.cs" />
     <Compile Include="Models\Method.cs" />
+    <Compile Include="Models\ModelBase.cs" />
     <Compile Include="Models\Namespace.cs" />
     <Compile Include="Models\Parameter.cs" />
     <Compile Include="Models\Project.cs" />
@@ -149,11 +152,23 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Types.cs" />
+    <EmbeddedResource Include="Controls\ParamList.resx">
+      <DependentUpon>ParamList.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ProjectList.resx">
       <DependentUpon>ProjectList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ProjectSummary.resx">
       <DependentUpon>ProjectSummary.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AddClass.resx">
+      <DependentUpon>AddClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AddCtor.resx">
+      <DependentUpon>AddCtor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AddParameter.resx">
+      <DependentUpon>AddParameter.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AddNamespace.resx">
       <DependentUpon>AddNamespace.cs</DependentUpon>
@@ -170,29 +185,14 @@
     <EmbeddedResource Include="Forms\StartMenu.resx">
       <DependentUpon>StartMenu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201602031927396_Project.resx">
-      <DependentUpon>201602031927396_Project.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201602181024162_Initial.resx">
+      <DependentUpon>201602181024162_Initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201602031940398_ProjectNamespace.resx">
-      <DependentUpon>201602031940398_ProjectNamespace.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201602181205221_ReturnParameter.resx">
+      <DependentUpon>201602181205221_ReturnParameter.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201602041906314_ClassModels.resx">
-      <DependentUpon>201602041906314_ClassModels.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201602041909425_ClassModelTypes.resx">
-      <DependentUpon>201602041909425_ClassModelTypes.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201602041912448_ClassModelUsing.resx">
-      <DependentUpon>201602041912448_ClassModelUsing.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201602041959205_ProjectNamespaces.resx">
-      <DependentUpon>201602041959205_ProjectNamespaces.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201602041959455_ProjectNamespaces1.resx">
-      <DependentUpon>201602041959455_ProjectNamespaces1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201602042000337_ProjectNamespaces2.resx">
-      <DependentUpon>201602042000337_ProjectNamespaces2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201602181209441_ParameterCorrect.resx">
+      <DependentUpon>201602181209441_ParameterCorrect.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

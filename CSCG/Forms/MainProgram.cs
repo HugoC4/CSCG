@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using CSCG.Helpers;
@@ -20,12 +19,6 @@ namespace CSCG.Forms
 
             Tree.LoadProject(Project);
 
-            //lblProjectId.Text = $"Id: {project.ProjectId}";
-            //lblProjectTitle.Text = $"Title: {project.Title}";
-            //lblProjectNamespace.Text = $"Namespace: {project.Namespace}";
-            //lblProjectCreated.Text = $"Created: {project.Created.ToShortDateString()} {project.Created.ToShortTimeString()}";
-            //lblProjectUpdated.Text = $"Updated: {project.Updated.ToShortDateString()} {project.Updated.ToShortTimeString()}";
-            
             ChangeView(ViewState.Project);
         }
 
@@ -56,47 +49,73 @@ namespace CSCG.Forms
 
             // Select the node the user has clicked.
             // The node appears selected until the menu is displayed on the screen.
-            //var oldSelectNode = tvProject.SelectedNode;
             tvProject.SelectedNode = node;
             // Get the nodetype
             NodeType nt = Tree.GetNodeType(node);
 
-            if (nt == NodeType.Root || nt == NodeType.Namespace)
+            if (nt == NodeType.Namespace)
                 cmNsRemove.Enabled = nt == NodeType.Namespace;
-
             else
                 cmClassAddConstructor.Enabled = nt != NodeType.Interface;
             // Show context menu
             cmNamespace.Show(tvProject, p);
-            // Highlight the selected node.
-            //tvProject.SelectedNode = oldSelectNode;
         }
 
         private void cmNsAddClass_Click(object sender, EventArgs e)
         {
-           /* NodeType nt = (NodeType)((ToolStripMenuItem) sender).Tag;
-            TreeNode node = new TreeNode($"Je Moeder ({tvProject.SelectedNode.Text})");
-            node.Tag = nt;
-            node.ImageIndex = _imageIndices[nt];
-            node.SelectedImageIndex = _imageIndices[nt];
-            tvProject.SelectedNode.Nodes.Add(node);*/
+            NodeType nodeType = (NodeType) ((ToolStripMenuItem) sender).Tag;
+            AddClass ac = new AddClass(nodeType, Tree.GetNamespace(tvProject.SelectedNode));
+
+            if (ac.ShowDialog(this) == DialogResult.OK)
+            {
+                if (nodeType != NodeType.Interface)
+                {
+                    Class cls = new Class()
+                    {
+                        Accessibility = ac.Accessibility,
+                        Name = ac.ClassName,
+                        Namespace = Tree.GetNamespace(tvProject.SelectedNode),
+                        IsAbstract = nodeType == NodeType.Abstract
+                    };
+                    if(ac.DefaultCtor)
+                        cls.Constructors.Add(new Constructor() {Accessibility = ac.Accessibility, Class = cls});
+                    cls.Namespace.Classes.Add(cls);
+                    Program.Db.Class.Add(cls);
+                    Program.Db.SaveChanges();
+                    Tree.AddClass(tvProject.SelectedNode, cls);
+                }
+                else
+                {
+                    Interface intf = new Interface()
+                    {
+                        Accessibility = ac.Accessibility,
+                        Name = ac.ClassName,
+                        Namespace = Tree.GetNamespace(tvProject.SelectedNode)
+                    };
+                    intf.Namespace.Interfaces.Add(intf);
+                    Program.Db.Interfaces.Add(intf);
+                    Program.Db.SaveChanges();
+                    Tree.AddInterface(tvProject.SelectedNode, intf);
+                }
+                tvProject.SelectedNode.Expand();
+            }
+
+            ac.Dispose();
         }
 
         private void cmNsAddNamespace_Click(object sender, EventArgs e)
         {
-            AddNamespace an;
-            if (Tree.GetNamespace(tvProject.SelectedNode) != null)
-                an = new AddNamespace(Tree.GetNamespace(tvProject.SelectedNode));
-            else 
-                an = new AddNamespace(Project);
+            AddNamespace an = new AddNamespace(Tree.GetNamespace(tvProject.SelectedNode));
 
             if (an.ShowDialog(this) == DialogResult.OK)
             {
-                Namespace ns = new Namespace() {Name = an.Namespace, Project = Project};
-                (Tree.GetNamespace(tvProject.SelectedNode).Namespaces ?? Project.Namespaces).Add(ns);
+                Namespace ns = new Namespace() {Name = an.Namespace};
+                Tree.GetNamespace(tvProject.SelectedNode)?.Namespaces.Add(ns);
                 Program.Db.SaveChanges();
                 Tree.AddNamespace(tvProject.SelectedNode, ns);
+                tvProject.SelectedNode.Expand();
             }
+
             an.Dispose();
         }
 

@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using CSCG.Forms;
+using CSCG.Models;
 
 namespace CSCG
 {
     static class Program
     {
         public static StartMenu StartMenu { get; set; }
+        public static Project Project { get; set; }
 
         public static CSCGContext Db { get; private set; }
 

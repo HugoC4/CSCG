@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace CSCG.Models
 {
-    public class Parameter
+    public class Parameter : ModelBase
     {
         [Key]
         public int ParemetedId { get; set; }
         public string Name { get; set; }
-        public string TypeNamespace { get; set; }
-        public string TypeName { get; set; }
+        public virtual Namespace Namespace { get; set; }
+        public string NamespaceGen { get; set; }
+        public virtual Class Class { get; set; }
+        public string ClassCustom { get; set; }
+        public virtual Interface Interface { get; set; }
     }
 }
